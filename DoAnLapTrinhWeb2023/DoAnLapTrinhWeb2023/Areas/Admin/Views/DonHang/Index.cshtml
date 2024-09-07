@@ -1,0 +1,100 @@
+﻿
+@using DoAnLapTrinhWeb2023.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    List<donHang> dh = ViewData["DonHang"] as List<donHang>;
+}
+<style>
+   
+    .container {
+        width: 500px;
+        margin: auto;   
+        text-align: center;
+    }
+
+    .pagination {
+        width: 400px;
+        margin-left: 50px;
+    }
+
+        .pagination a {
+            display: block;
+            color: black;
+            float: right;
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            transition: background-color .3s;
+            margin: 0 4px;
+        }
+
+            .pagination a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            .pagination a:hover:not(.active) {
+                background-color: deepskyblue;
+            }
+</style>
+<div class="content-wrapper">
+    <table class="table">
+        <tr>
+            <th>
+                <p>Ngày đặt</p>
+            </th>
+            <th>
+                <p>Đã kích hoạt</p>
+            </th>
+            <th>
+                <p>Ngày giao hàng</p>
+            </th>
+            <th>
+                <p>Địa chỉ giao hàng</p>
+            </th>
+            <th>
+                <p>Ghi chú</p>
+            </th>
+            <th>
+                <p>Tên khách hàng</p>
+            </th>
+         
+
+            <th></th>
+        </tr>
+        @foreach (var item in dh)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(Item => item.ngayDat)
+        </td>
+        <td>
+            @Html.DisplayFor(Item => item.daKichHoat)
+        </td>
+        <td>
+            @Html.DisplayFor(Item => item.ngayGH)
+        </td>
+        <td>
+            @Html.DisplayFor(Item => item.diaChiGH)
+        </td>
+        <td>
+            @Html.DisplayFor(Item => item.ghiChu)
+        </td>
+        <td>
+            @Html.DisplayFor(Item => item.khachHang.tenKH)
+        </td>
+        <td>
+            @using (Html.BeginForm("Duyet", "DonHang", FormMethod.Post))
+            {
+                <input type="hidden" value="@item.soDH" name="soDH" />
+                <button class="btn-success" type="submit"> Duyệt</button>
+            }
+        </td>
+        
+    </tr>
+        }
+
+    </table>
+ 
+    </div>

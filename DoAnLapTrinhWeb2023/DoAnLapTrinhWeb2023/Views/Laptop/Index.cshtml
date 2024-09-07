@@ -1,0 +1,136 @@
+﻿@using DoAnLapTrinhWeb2023.Models;
+
+@{
+    ViewBag.Title = "Index";
+    List<sanPham> LT = ViewData["lt"] as List<sanPham>;
+    List<Brand> BR = ViewData["up"] as List<Brand>;
+            }
+
+    <section class="main-content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <!-- BSTORE-BREADCRUMB START -->
+                    <div class="bstore-breadcrumb">
+                        <a href="index.html">Trang chủ</a>
+                        <span><i class="fa fa-caret-right"></i></span>
+                        <span>Bàn phím <span>
+                    </div>
+                    <!-- BSTORE-BREADCRUMB END -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <!-- PRODUCT-LEFT-SIDEBAR START -->
+                    <div class="product-left-sidebar">
+                        <!-- SINGLE SIDEBAR ENABLED FILTERS START -->
+                        <!-- SINGLE SIDEBAR ENABLED FILTERS END -->
+                        <!-- SINGLE SIDEBAR CATEGORIES START -->
+                        <div class="product-single-sidebar">
+                            <span class="sidebar-title">Danh mục</span>
+                            <ul>
+                                @foreach (var item in BR .Skip(8) .Take(2))
+                                {
+                                    <li>
+                                        <label class="cheker">
+                                            <input type="checkbox" name="categories" />
+                                            <span></span>
+                                        </label>
+                                        <a href="@Url.Action("Index" , "Laptop" , new { tenTH = item.tenTH })">@item.tenTH</a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+
+
+
+                      
+                        <!-- SINGLE SIDEBAR PROPERTIES END -->
+                    </div>
+
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                    <div class="right-all-product">
+                        <!-- PRODUCT-CATEGORY-HEADER START -->
+                        <div class="product-category-header">
+                            <div class="category-header-image">
+                                @*<img width="100%" height="520px" src="~/image/biglt.png" alt="category-header" />*@
+
+                            </div>
+                        </div>
+                        <!-- PRODUCT-CATEGORY-HEADER END -->
+                        <div class="product-category-title">
+                            <!-- PRODUCT-CATEGORY-TITLE START -->
+                            <!-- PRODUCT-CATEGORY-TITLE END -->
+                        </div>
+                        <div class="product-shooting-area">
+
+                            <!-- PRODUCT-SHOOTING-RESULT START -->
+                            <div class="product-shooting-result">
+
+
+                                <div class="showing-next-prev">
+
+
+                                </div>
+                            </div>
+                            <!-- PRODUCT-SHOOTING-RESULT END -->
+                        </div>
+                    </div>
+                    <!-- ALL GATEGORY-PRODUCT START -->
+                    <div class="all-gategory-product">
+                        <div class="row">
+                            <ul class="gategory-product">
+                                @foreach (var item in LT)
+                                {
+                                    <!-- SINGLE ITEM START -->
+                                <li class="gategory-product-list  col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                    <div class="single-product-item">
+                                        <div class="product-image">
+                                            <a href="@Url.Action("Details","Product", new {maSP = item.maSP } )"><img src="@item.hinhDD" alt="product-image" /></a>
+                                            <a href="single-product.html" class="new-mark-box">new</a>
+                                            <div class="overlay-content">
+                                                <ul>
+                                                    <li><a href="@Url.Action("Details","Product", new {maSP = item.maSP } )" title="Quick view"><i class="fa fa-search"></i></a></li>                                                  
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="customar-comments-box">
+                                                <div class="rating-box">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-half-empty"></i>
+                                                    <i class="fa fa-star-half-empty"></i>
+                                                </div>
+                                                <div class="review-box">
+                                                    <span>1 Review(s)</span>
+                                                </div>
+                                            </div>
+                                            @Html.ActionLink(item.tenSP, "Details", "Product", new { maSP = item.maSP }, null)
+
+                                            <div class="price-box">
+                                                <span class="price">@item.giaBan  ₫</span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                    <!-- SINGLE ITEM END -->
+                                }
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- ALL GATEGORY-PRODUCT END -->
+                    <!-- PRODUCT-SHOOTING-RESULT START -->
+                    <!-- PRODUCT-SHOOTING-RESULT END -->
+                </div>
+            </div>
+        </div>
+    </section>
+

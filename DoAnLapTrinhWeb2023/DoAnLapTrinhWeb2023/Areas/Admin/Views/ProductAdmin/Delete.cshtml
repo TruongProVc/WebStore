@@ -1,0 +1,139 @@
+﻿@model DoAnLapTrinhWeb2023.Models.sanPham
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+    <h2>Xóa sản phẩm</h2>
+    <div>
+        
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.tenSP)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tenSP)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.hinhDD)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.hinhDD)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ndTomTat)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ndTomTat)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ngayDang)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ngayDang)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.loaiHang)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.loaiHang)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.noiDung)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.noiDung)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.daDuyet)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.daDuyet)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.giaBan)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.giaBan)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.giamGia)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.giamGia)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.nhaSanXuat)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.nhaSanXuat)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.dvt)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.dvt)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Brand.tenTH)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Brand.tenTH)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.loaiSP.loaiSP1)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.loaiSP.loaiSP1)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.taiKhoanTV.matKhau)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.taiKhoanTV.matKhau)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm("Delete", "ProductAdmin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+    <div class="form-actions no-color">
+        <input type="hidden" value="@Model.maSP" name="sp" />
+        <input type="submit" value="Delete" onclick="confirm('BẠN CÓ CHẮC LÀ MUỐN XÓA SẢN PHẨM KHÔNG !!!!!')" class="btn btn-sm btn-danger" /> |
+        <a href="@Url.Action("Index","ProductAdmin")" class="btn btn-sm btn-info">
+            <i class="fa fa-backward"></i>    Quay lại
+        </a>
+    </div>
+        }
+    </div>
+</div>  

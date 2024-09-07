@@ -1,0 +1,242 @@
+﻿@using DoAnLapTrinhWeb2023.Models;
+@model DoAnLapTrinhWeb2023.Models.khachHang
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Cart> x = Session["GioHang"] as List<Cart>;
+}
+
+<style>
+    /*   .row {
+        display: -ms-flexbox;  IE10
+        display: flex;
+        -ms-flex-wrap: wrap;  IE10
+        flex-wrap: wrap;
+        margin: 0 -16px;
+    }*/
+
+    .col-25 {
+        -ms-flex: 25%; /* IE10 */
+        flex: 25%;
+    }
+
+    .col-50 {
+        -ms-flex: 50%; /* IE10 */
+        flex: 50%;
+    }
+
+    .col-75 {
+        -ms-flex: 75%; /* IE10 */
+        flex: 75%;
+    }
+
+    .col-25,
+    .col-50,
+    .col-75 {
+        padding: 0 16px;
+    }
+
+    .container {
+        padding: 5px 20px 15px 20px;
+        border-radius: 3px;
+    }
+
+    input[type=text] {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    label {
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .icon-container {
+        margin-bottom: 20px;
+        padding: 7px 0;
+        font-size: 24px;
+    }
+
+    .btn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 12px;
+        margin: 10px 0;
+        border: none;
+        width: 100%;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 17px;
+    }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+    span.price {
+        float: right;
+        color: grey;
+    }
+</style>
+<div class="row">
+    <div class="col-75">
+        <div class="container">
+            @using (Html.BeginForm("Payment", "ThanhToan", FormMethod.Post))
+            {
+                <div class="row">
+                    <div class="col-50">
+                        <label for="fname"><i class="fa fa-user"></i>Họ tên khách</label>
+                        @Html.TextBoxFor(m => m.tenKH, new { @class = "form-control", @placeholder = "Nguyễn Văn A", @required = "" })
+                        <div class="form-group" style="margin-bottom:20px">
+                            <label class="radio-inline">@Html.RadioButtonFor(m => m.gioiTinh, new { @name = "gioiTinh", @required = "" }) Nam </label>
+                            <label class="radio-inline">@Html.RadioButton("gioiTinh", false) Nữ </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="ngaySinh">Ngày sinh</label>
+                            @Html.TextBoxFor(m => m.ngaySinh, new { type = "date", @class = "form-control width: 100%", @style = " width: 100%;"})
+
+                            <label for="email"><i class="fa fa-envelope"></i> Email</label>
+
+                            @Html.TextBoxFor(m => m.email, new { @class = "form-control", @placeholder = "...@gmail.com", @required = "" })
+
+                            <label for="adr"><i class="fa fa-address-card-o"></i> SĐT</label>
+                            @Html.TextBoxFor(m => m.soDT, new { @class = "form-control", @placeholder = "+84", @required = "" })
+
+                            <label for="city"><i class="fa fa-institution"></i> Địa chỉ</label>
+                            @Html.TextBoxFor(m => m.diaChi, new { @class = "form-control", @placeholder = "Nhập địa chỉ nơi nhận hàng", @required = "" })
+
+                            <label for="city"><i class="fa fa-institution"></i> Ghi chú</label>
+                            @Html.TextBoxFor(m => m.ghiChu, new { @class = "form-control", @placeholder = "Nhập lưu ý ....." })
+                        </div>
+                        <div class="form-group">
+                            <label>Phương thức thanh toán</label>
+                            <select name="phuongthucthanhtoan" class="form-control">
+                                <option value="COD">COD</option>
+                                <option value="thanhToanOnline">Thanh toán online</option>
+                            </select>
+                        </div>
+                        <div class="returne-continue-shop">
+                            <button class="btn" type="submit"> Đặt hàng</button>
+                            <a href="@Url.Action("Index", "CartShop")" class="continueshoping"><i class="fa fa-chevron-left"></i>Quay lại giỏ hàng</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            <section class="main-content-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <!-- BSTORE-BREADCRUMB START -->
+                            <!-- CART TABLE_BLOCK START -->
+                            <div class="table-responsive">
+                                <!-- TABLE START -->
+                                <table class="table table-bordered" id="cart-summary">
+                                    <!-- TABLE HEADER START -->
+                                    <thead>
+                                        <tr>
+                                            @*<th class="cart-product">Product</th>*@
+                                            <th class="cart-description">Tên sản phẩm</th>
+                                            <th class="cart-unit text-right">Giá sản phẩm</th>
+                                            <th class="cart-avail text-center">Giảm giá</th>
+
+                                            <th class="cart_quantity text-center">SL</th>
+                                            <th class="cart-total text-right">Tổng</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- TABLE HEADER END -->
+                                    <!-- TABLE BODY START -->
+                                    <tbody>
+                                        <!-- SINGLE CART_ITEM START -->
+                                        @foreach (var i in x)
+                                        {
+                                            <tr>
+
+                                                <td class="cart-description">
+                                                    <p class="product-name"><a href="#">@i.tenSP</a></p>
+
+                                                </td>
+                                                <td class="cart-avail">@string.Format("{0:0,0 vnđ}", i.giaSP)</td>
+                                                <td class="cart-unit">
+                                                    <ul class="price text-right">
+                                                        <li class="price">@string.Format("{0:0,0 vnđ}", i.giamGia)</li>
+                                                    </ul>
+                                                </td>
+                                                <td class="cart_quantity text-center">
+                                                    <div class="cart-plus-minus-buttons" style="width:100%; padding:20px">
+                                                        @*<input class="cart-plus-minus" type="text" name="SoLuong" value="@i.soLuong" autocomplete="off" size="2">*@
+                                                        <input class="cart-plus-minus" maxlength="12" value="@i.soLuong" id="@i.maSP" onchange="updateQuantity1(@i.maSP)" />
+                                                    </div>
+                                                </td>
+
+                                                <td class="cart-total">
+                                                    <span class="price">@string.Format("{0:0,0 vnđ}", i.tongGia)</span>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+
+                                    <tfoot>
+
+                                        <tr>
+                                            <td class="text-right" colspan="4">Tổng giá sản phẩm</td>
+                                            @{
+                                                List<Cart> tg = (List<Cart>)Session["GioHang"];
+                                                var total = tg.Sum(item => item.giaSP * item.soLuong);
+                                            }
+
+                                            <td class="price" colspan="2"> @string.Format("{0:0,0 vnđ}", total)</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-right" colspan="4">Phí Ship</td>
+                                            <td class="price" colspan="2">Free</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right" colspan="4">VAT</td>
+                                            @{
+                                                List<Cart> vat = (List<Cart>)Session["GioHang"];
+                                                var VAT = ((vat.Sum(item => item.giaSP * item.soLuong)) * 10) / 100;
+                                            }
+                                            <td class="price" colspan="2">@string.Format("{0:0,0 vnđ}", VAT)</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="total-price-container text-right" colspan="4">
+                                                <span>Tổng thành tiền</span>
+                                            </td>
+                                            @{
+                                                List<Cart> TongTien = (List<Cart>)Session["GioHang"];
+                                                var Tong = (TongTien.Sum(item => item.giaSP * item.soLuong)) - ((TongTien.Sum(item => item.giaSP * item.soLuong)) * 10) / 100;
+                                            }
+                                            <td id="total-price-container" class="price" colspan="2">
+                                                <span id="total-price">@string.Format("{0:0,0 vnđ}", Tong)</span>
+                                            </td>
+                                        </tr>
+
+
+                                    </tfoot>
+                                    <!-- TABLE FOOTER END -->
+                                </table>
+                                <!-- TABLE END -->
+                            </div>
+                            <!-- CART TABLE_BLOCK END -->
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+

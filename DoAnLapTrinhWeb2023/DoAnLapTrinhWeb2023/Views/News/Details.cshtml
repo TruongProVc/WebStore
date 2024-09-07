@@ -1,0 +1,92 @@
+﻿@model  DoAnLapTrinhWeb2023.Models.baiViet
+@{
+    ViewBag.Title = "Details";
+}
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+       
+    }
+
+    #wapper {
+        max-width: 600px;
+        background-color: #fff;
+        margin: 30px auto;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    }
+
+    h1 {
+        padding: 20px 0px;
+        text-align: center;
+    }
+
+    ul.list-post li {
+        display: flex
+    }
+
+    ul.ist-post li .post-thumb {
+        flex: 0 0 30%;
+        padding-right: 15px;
+    }
+
+    ul.list-post li .post-thumb img {
+        max-width: 100%;
+    }
+
+    ul.list-post .post-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #333;
+        display: block;
+        padding-bottom: 10px;
+        transition: color 0.3s;
+    }
+
+    ul.list-post li {
+        margin-bottom: 20px;
+    }
+
+        ul.list-post li:hover .post-title {
+            color: #971928;
+        }
+
+    ul.list-post .post-excerpt {
+        color: #5b5b5b;
+    }
+    
+</style>
+<div id="wapper">
+    <h1>@Model.tenBV</h1>
+    <a href="" class="form-group">
+        <img width="400px" height="310px" src="@Model.hinhDD" alt=""> 
+        </a>
+        <ul class="list-post">
+            <li>
+                <div class="more-info">
+                    <a href="" class="post-title">
+                        @Model.ndTomTat
+                    </a>
+                    <p class="post-excerpt">
+                        @Model.noiDung
+                    </p>
+                </div>
+            </li>
+        </ul>
+</div>
+
+
+

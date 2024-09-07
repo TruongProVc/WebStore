@@ -1,0 +1,117 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<DoAnLapTrinhWeb2023.Models.sanPham>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .container {
+  width: 500px;
+  margin: auto;
+  text-align: center;
+}
+.pagination {
+  width: 400px;
+  margin-left: 50px;
+}
+    .pagination a {
+        display: block;
+        color: black;
+        float: right;   
+        padding: 8px 16px;
+        border: 1px solid #ddd;
+        text-decoration: none;
+        transition: background-color .3s;
+        margin: 0 4px;
+    }
+ 
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+ 
+.pagination a:hover:not(.active) {
+  background-color: deepskyblue;
+}
+
+</style>
+
+
+<div class="content-wrapper">
+  
+        
+    <p>
+        <a href="@Url.Action("Create", "ProductAdmin")" class="btn btn-primary">
+            <i class="fa fa-plus"></i> Tạo sản phẩm 
+        </a>    
+    </p>
+    @using (Html.BeginForm("Index", "ProductAdmin", FormMethod.Get))
+    {
+   <p>
+       Tìm kiếm sản phẩm : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+       <input type="submit" value="Tìm kiếm"/>
+   </p>
+    }
+    <table class="table">
+        <tr>
+            <th>
+                <p>Tên sản phẩm</p>
+            </th>
+            <th>
+                <p>File hình</p>
+            </th>
+            <th>
+                <p>Nội dung tóm tắt</p>
+            </th>                        
+            <th>            
+                <p>Giá bán</p>
+            </th>
+            <th>
+                <p>Thương hiệu</p>
+            </th>
+            <th>
+                <p>Loại sản phẩm</p>
+            </th>          
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td> 
+                    @Html.DisplayFor(modelItem => item.tenSP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hinhDD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ndTomTat)
+                </td>          
+                <td>
+                    @Html.DisplayFor(modelItem => item.giaBan)
+                </td>            
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.tenTH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.loaiSP.loaiSP1)
+                </td>
+               
+                <td>
+                    <a href="@Url.Action("Edit", "ProductAdmin", new { id = item.maSP })" class="btn btn-sm btn-success"> 
+                        Edit <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="@Url.Action("Details", "ProductAdmin", new { id = item.maSP })" class="btn btn-sm btn-info">
+                        Details <i class="fa fa-eye"></i>
+                    </a>
+                    <a href="@Url.Action("Delete", "ProductAdmin", new { id = item.maSP })" class="btn btn-sm btn-danger">
+                        Delete <i class="fas fa-trash-alt"></i>
+                    </a>          
+                </td>
+            </tr>
+        }
+    </table>
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page , CurrentFilter =  ViewBag.CurrentFilter }))
+</div>

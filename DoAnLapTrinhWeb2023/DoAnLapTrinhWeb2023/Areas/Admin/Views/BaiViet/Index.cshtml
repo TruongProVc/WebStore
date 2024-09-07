@@ -1,0 +1,126 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<DoAnLapTrinhWeb2023.Models.baiViet>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .container {
+        width: 500px;   
+        margin: auto;
+        text-align: center;
+    }
+    .pagination {
+        width: 400px;
+        margin-left: 50px;
+    }
+        .pagination a {
+            display: block;
+            color: black;
+            float: right;
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            transition: background-color .3s;
+            margin: 0 4px;
+        }
+            .pagination a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+            .pagination a:hover:not(.active) {
+                background-color: deepskyblue;
+            }
+</style>
+
+<div class="content-wrapper">
+  
+
+    <p>
+        <a href="@Url.Action("Create", "BaiViet")" class="btn btn-primary">
+            <i class="fa fa-plus"></i> Tạo bài viết
+        </a>
+    </p>
+    @using (Html.BeginForm("Index", "BaiViet", FormMethod.Get)) 
+    {
+        <p>
+            Tìm kiếm sản phẩm : @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Tìm kiếm" />
+        </p>
+    }
+    <table class="table">
+        <tr>
+            <th>
+                <p>Tên bài viết</p>
+            </th>
+            <th>
+                <p>Hình đại diện</p>
+            </th>
+            <th>
+                <p>Nội dung tóm tắt</p>
+            </th>
+            <th>
+                <p>Ngày đăng</p>
+            </th>
+            <th>
+                <p>Nội dung</p>
+            </th>
+            <th>
+                <p>Đã duyệt</p>
+            </th>
+            <th>
+                <p>Mã loại</p>
+            </th>
+            <th>
+                <p>Tài khoản</p>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.tenBV)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hinhDD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ndTomTat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ngayDang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.noiDung)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.daDuyet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.maLoai)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.taiKhoanTV.matKhau)
+        </td>
+        <td>
+            <a href="@Url.Action("Edit", "BaiViet", new { id = item.maBV })" class="btn btn-sm btn-success">
+                Edit <i class="fas fa-edit"></i>
+            </a>
+            <a href="@Url.Action("Details", "BaiViet", new { id = item.maBV })" class="btn btn-sm btn-info">
+                Details <i class="fa fa-eye"></i>
+            </a>
+            <a href="@Url.Action("Delete", "BaiViet", new { id = item.maBV })" class="btn btn-sm btn-danger">
+                Delete <i class="fas fa-trash-alt"></i>
+            </a>
+        </td>
+    </tr>
+        }
+
+    </table>
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, CurrentFilter = ViewBag.CurrentFilter }))
+    </div>

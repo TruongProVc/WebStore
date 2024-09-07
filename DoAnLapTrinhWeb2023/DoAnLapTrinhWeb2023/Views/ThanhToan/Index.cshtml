@@ -1,0 +1,138 @@
+﻿@using DoAnLapTrinhWeb2023.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Cart> x = Session["GioHang"] as List<Cart>;
+
+}
+
+<!-- MAIN-CONTENT-SECTION START -->
+<section class="main-content-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <!-- BSTORE-BREADCRUMB START -->
+                <div class="bstore-breadcrumb">
+                    <a href="index.html">HOMe</a>
+                    <span><i class="fa fa-caret-right"></i></span>
+                    <span>Your payment method</span>
+                </div>
+                <!-- BSTORE-BREADCRUMB END -->
+                <!-- SHOPING-CART-MENU END -->
+                <!-- CART TABLE_BLOCK START -->
+                <div class="table-responsive">
+                    <!-- TABLE START -->
+                    <table class="table table-bordered" id="cart-summary">
+                        <!-- TABLE HEADER START -->
+                        <thead>
+                            <tr>
+                                @*<th class="cart-product">Product</th>*@
+                                <th class="cart-description">Tên sản phẩm</th>
+                                <th class="cart-unit text-right">Giá sản phẩm</th>
+                                <th class="cart-avail text-center">Giảm giá</th>
+
+                                <th class="cart_quantity text-center">SL</th>
+                                <th class="cart-delete">&nbsp;</th>
+                                <th class="cart-total text-right">Tổng</th>
+                            </tr>
+                        </thead>
+                        <!-- TABLE HEADER END -->
+                        <!-- TABLE BODY START -->
+                        <tbody>
+                            <!-- SINGLE CART_ITEM START -->
+                            @foreach (var i in x)
+                            {
+                                <tr>
+
+                                    <td class="cart-description">
+                                        <p class="product-name"><a href="#">@i.tenSP</a></p>
+
+                                    </td>
+                                    <td class="cart-avail">@string.Format("{0:0,0 vnđ}", i.giaSP)</td>
+                                    <td class="cart-unit">
+                                        <ul class="price text-right">
+                                            <li class="price">@string.Format("{0:0,0 vnđ}", i.giamGia)</li>
+                                        </ul>
+                                    </td>
+                                    <td class="cart_quantity text-center">
+                                        <div class="cart-plus-minus-buttons" style="width:100%;">
+                                            @*<input class="cart-plus-minus" type="text" name="SoLuong" value="@i.soLuong" autocomplete="off" size="2">*@
+                                            <input class="cart-plus-minus" type="number" min="1" maxlength="12" value="@i.soLuong" id="@i.maSP" onchange="updateQuantity1(@i.maSP)" />
+                                        </div>
+                                    </td>
+                                    <td class="cart-delete text-center">
+                                        @using (Html.BeginForm("RemoveItem", "CartShop", FormMethod.Post))
+                                        {
+                                            <input type="hidden" name="maSP" value="@i.maSP" />
+                                            <button class="cart_quantity_delete"><i class="fa fa-trash-o"></i></button>
+
+                                        }
+                                        @*<span>
+                                                <a href="#" class="cart_quantity_delete" title="Delete"><i class="fa fa-trash-o"></i></a>
+                                            </span>*@
+                                    </td>
+                                    <td class="cart-total">
+                                        <span class="price">@string.Format("{0:0,0 vnđ}", i.tongGia)</span>
+
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+
+                        <tfoot>
+
+                            <tr>
+                                <td class="text-right" colspan="4">Tổng giá sản phẩm</td>
+                                @{
+                                    List<Cart> tg = (List<Cart>)Session["GioHang"];
+                                    var total = tg.Sum(item => item.giaSP * item.soLuong);
+                                }
+
+                                <td class="price" colspan="2"> @string.Format("{0:0,0 vnđ}", total)</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right" colspan="4">Phí Ship</td>
+                                <td class="price" colspan="2">Free</td>
+                            </tr>
+                            <tr>
+                                <td class="total-price-container text-right" colspan="4">
+                                    <span>Tổng thành tiền</span>
+                                </td>
+                              
+                                   @{
+                                    List<Cart> tg1 = (List<Cart>)Session["GioHang"];
+                                    var total1 = tg1.Sum(item => item.giaSP * item.soLuong);
+                                }
+                                <td class="price" colspan="2"> @string.Format("{0:0,0 vnđ}", total1)</td>
+                            </tr>
+
+
+                        </tfoot>
+                        <!-- TABLE FOOTER END -->
+                    </table>
+                    <!-- TABLE END -->
+                </div>
+                <!-- CART TABLE_BLOCK END -->
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <!-- RETURNE-CONTINUE-SHOP START -->
+                    <div class="returne-continue-shop">
+                        <a href="@Url.Action("Index","Home")" class="continueshoping"><i class="fa fa-chevron-left"></i>Tiếp tục mua sắp</a>
+                        <a href="@Url.Action("Payment","ThanhToan")" class="procedtocheckout">Tiếp tục thanh toán<i class="fa fa-chevron-right"></i></a>
+                    </div>
+                    <!-- RETURNE-CONTINUE-SHOP END -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- MAIN-CONTENT-SECTION END -->
+<script>
+    function updateQuantity1(maSP)
+    {
+         var newQuantity = $("#" + maSP).val();
+         window.location.href = "/ThanhToan/UppdateItem?maSP=" + maSP + "&sl=" + newQuantity;
+    }
+</script>

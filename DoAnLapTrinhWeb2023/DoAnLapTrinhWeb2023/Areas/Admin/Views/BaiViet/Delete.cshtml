@@ -1,0 +1,92 @@
+﻿@model DoAnLapTrinhWeb2023.Models.baiViet
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+    <h2>Xóa sản phẩm</h2>
+
+
+    <div>
+        <h4>baiViet</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.tenBV)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tenBV)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.hinhDD)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.hinhDD)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ndTomTat)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ndTomTat)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ngayDang)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ngayDang)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.noiDung)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.noiDung)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.daDuyet)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.daDuyet)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.maLoai)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.maLoai)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.taiKhoanTV.matKhau)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.taiKhoanTV.matKhau)
+            </dd>
+
+        </dl>
+        @using (Html.BeginForm("Delete", "BaiViet", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-actions no-color">
+                <input type="hidden" value="@Model.maBV" name="bv" />
+                <input type="submit" value="Delete" onclick="confirm('BẠN CÓ CHẮC LÀ MUỐN XÓA BÀI VIẾT KHÔNG !!!!!')" class="btn btn-sm btn-danger" /> |
+                <a href="@Url.Action("Index","ProductAdmin")" class="btn btn-sm btn-info">
+                    <i class="fa fa-backward"></i>    Quay lại
+                </a>
+            </div>
+        }
+    </div>
+</div>

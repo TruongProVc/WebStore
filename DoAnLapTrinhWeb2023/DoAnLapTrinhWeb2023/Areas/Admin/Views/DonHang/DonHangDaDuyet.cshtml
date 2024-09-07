@@ -1,0 +1,64 @@
+﻿@using DoAnLapTrinhWeb2023.Models;
+@{
+    ViewBag.Title = "DonHangDaDuyet";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    List<donHang> dh = ViewData["DonHang"] as List<donHang>;
+
+
+}
+
+<h2>SanPhamDaDuyet</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            <p>Ngày đặt</p>
+        </th>
+        <th>
+            <p>Đã kích hoạt</p>
+        </th>
+        <th>
+            <p>Ngày giao hàng</p>
+        </th>
+        <th>
+            <p>Địa chỉ giao hàng</p>
+        </th>
+        <th>
+            <p>Ghi chú</p>
+        </th>
+        <th>
+            <p>Tên khách hàng</p>
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in dh)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(Item => item.ngayDat)
+            </td>
+            <td>
+                @Html.DisplayFor(Item => item.daKichHoat)
+            </td>
+            <td>
+                @Html.DisplayFor(Item => item.ngayGH)
+            </td>
+            <td>
+                @Html.DisplayFor(Item => item.diaChiGH)
+            </td>
+            <td>
+                @Html.DisplayFor(Item => item.ghiChu)
+            </td>
+            <td>
+                @Html.DisplayFor(Item => item.khachHang.tenKH)
+            </td>
+
+        </tr>
+    }
+
+</table>
